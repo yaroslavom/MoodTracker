@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import React from 'react';
 
-type Props = {};
+// type Props = {}; props: Props
 
-const History = (props: Props) => {
+const History: React.FC = () => {
   return (
     <View>
       <Text>History.screen</Text>
@@ -12,5 +12,3 @@ const History = (props: Props) => {
 };
 
 export default History;
-
-const styles = StyleSheet.create({});

@@ -3,7 +3,7 @@ import React from 'react';
 
 // type Props = {}; props: Props
 
-const Analytics = () => {
+const Analytics: React.FC = () => {
   return (
     <View>
       <Text>Analytics.screen</Text>

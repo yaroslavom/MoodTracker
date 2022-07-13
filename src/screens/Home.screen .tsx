@@ -1,22 +1,27 @@
-import { StyleSheet, View } from 'react-native';
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import { MoodPicker } from '../components/MoodPicker';
 import { MoodItemRow } from '../components/MoodItemRow';
+import { RootState } from '../context/store';
+import { addMood } from '../context/moodOptionSlice';
 import { MoodOptionType, MoodOptionWithTimestamp } from '../types';
 
-// type Props = {}; props: Props
+const Home: React.FC = () => {
+  const moodList = useSelector((state: RootState) => state.mood.moodList);
+  const dispatch = useDispatch();
 
-const Home = () => {
-  const [moodList, setMoodList] = React.useState<MoodOptionWithTimestamp[]>([]);
-
-  const handleSelectMood = React.useCallback((mood: MoodOptionType) => {
-    setMoodList(current => [...current, { mood, timestamp: Date.now() }]);
-  }, []);
+  const handleSelectMood = React.useCallback(
+    (mood: MoodOptionType) => {
+      dispatch(addMood({ mood, timestamp: Date.now() }));
+    },
+    [dispatch],
+  );
 
   return (
     <View style={styles.container}>
       <MoodPicker onSelect={handleSelectMood} />
-      {moodList.map(item => (
+      {moodList.map((item: MoodOptionWithTimestamp) => (
         <MoodItemRow item={item} key={item.timestamp} />
       ))}
     </View>
