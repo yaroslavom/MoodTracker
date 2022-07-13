@@ -1,15 +1,15 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
 import { MoodPicker } from '../components/MoodPicker';
 import { MoodItemRow } from '../components/MoodItemRow';
 import { RootState } from '../context/store';
 import { addMood } from '../context/moodOptionSlice';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { MoodOptionType, MoodOptionWithTimestamp } from '../types';
 
 const Home: React.FC = () => {
-  const moodList = useSelector((state: RootState) => state.mood.moodList);
-  const dispatch = useDispatch();
+  const moodList = useAppSelector((state: RootState) => state.moodList);
+  const dispatch = useAppDispatch();
 
   const handleSelectMood = React.useCallback(
     (mood: MoodOptionType) => {

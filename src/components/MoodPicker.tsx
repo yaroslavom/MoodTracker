@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import type { RootState } from '../context/store';
-import { MoodOptionType } from '../types';
 import { theme } from '../context/theme';
+import { useAppSelector } from '../hooks';
+import { MoodOptionType } from '../types';
 
 type MoodPickerProps = {
   onSelect: (mood: MoodOptionType) => void;
 };
 
 export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelect }) => {
-  const moodOptions = useSelector((state: RootState) => state.mood.moodOption);
+  const moodOptions = useAppSelector((state: RootState) => state.moodOption);
 
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
 
