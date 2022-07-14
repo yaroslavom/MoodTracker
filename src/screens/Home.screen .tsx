@@ -1,30 +1,15 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { MoodPicker } from '../components/MoodPicker';
-import { MoodItemRow } from '../components/MoodItemRow';
-import { RootState } from '../context/store';
-import { addMood } from '../context/moodOptionSlice';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { MoodOptionType, MoodOptionWithTimestamp } from '../types';
+import { StyleSheet, ImageBackground } from 'react-native';
+import MoodPicker from '../components/MoodPicker';
+
+const imageUrl =
+  'https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1766&q=80';
 
 const Home: React.FC = () => {
-  const moodList = useAppSelector((state: RootState) => state.moodList);
-  const dispatch = useAppDispatch();
-
-  const handleSelectMood = React.useCallback(
-    (mood: MoodOptionType) => {
-      dispatch(addMood({ mood, timestamp: Date.now() }));
-    },
-    [dispatch],
-  );
-
   return (
-    <View style={styles.container}>
-      <MoodPicker onSelect={handleSelectMood} />
-      {moodList.map((item: MoodOptionWithTimestamp) => (
-        <MoodItemRow item={item} key={item.timestamp} />
-      ))}
-    </View>
+    <ImageBackground source={{ uri: imageUrl }} style={styles.container}>
+      <MoodPicker />
+    </ImageBackground>
   );
 };
 

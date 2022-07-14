@@ -1,25 +1,67 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+  useWindowDimensions,
+} from 'react-native';
 import type { RootState } from '../context/store';
+import { addMood } from '../context/moodOptionSlice';
 import { theme } from '../context/theme';
-import { useAppSelector } from '../hooks';
+import { useAppSelector, useAppDispatch } from '../hooks';
 import { MoodOptionType } from '../types';
 
-type MoodPickerProps = {
-  onSelect: (mood: MoodOptionType) => void;
-};
+const imageSrc = require('../../assets/cloudy-cloud.png');
 
-export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelect }) => {
+const MoodPicker: React.FC = () => {
   const moodOptions = useAppSelector((state: RootState) => state.moodOption);
-
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
+  const [hasSelected, setHasSelected] = useState(false);
+
+  const { width } = useWindowDimensions();
+
+  let imageSize = 200;
+
+  if (width < 380) {
+    imageSize = 150;
+  }
+
+  const dispatch = useAppDispatch();
+
+  const handleSelectMood = React.useCallback(
+    (mood: MoodOptionType) => {
+      dispatch(addMood({ mood, timestamp: Date.now() }));
+    },
+    [dispatch],
+  );
 
   const handleSelect = React.useCallback(() => {
     if (selectedMood) {
-      onSelect(selectedMood);
+      handleSelectMood(selectedMood);
       setSelectedMood(undefined);
+      setHasSelected(true);
     }
-  }, [onSelect, selectedMood]);
+  }, [handleSelectMood, selectedMood]);
+
+  const imageStyle = {
+    width: imageSize,
+    height: imageSize,
+  };
+
+  if (hasSelected) {
+    return (
+      <View style={styles.container}>
+        <View style={[styles.imageWrapper, imageStyle]}>
+          <Image style={styles.image} source={imageSrc} />
+        </View>
+        <Pressable style={styles.button} onPress={() => setHasSelected(false)}>
+          <Text style={styles.buttonText}>Choose another</Text>
+        </Pressable>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -49,6 +91,8 @@ export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelect }) => {
     </View>
   );
 };
+
+export default MoodPicker;
 
 const styles = StyleSheet.create({
   moodText: {
@@ -83,6 +127,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     padding: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
   heading: {
     fontSize: 20,
@@ -90,6 +135,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textAlign: 'center',
     marginBottom: 20,
+    color: theme.colorWhite,
   },
   button: {
     backgroundColor: theme.colorPurple,
@@ -103,5 +149,12 @@ const styles = StyleSheet.create({
     color: theme.colorWhite,
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  imageWrapper: {
+    alignSelf: 'center',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
 });
