@@ -117,8 +117,9 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     color: theme.colorPurple,
-    fontWeight: 'bold',
-    fontSize: 10,
+    fontFamily: theme.fontFamilyBold,
+    fontSize: 12,
+    lineHeight: 16,
     textAlign: 'center',
   },
   container: {
@@ -130,12 +131,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
   heading: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    letterSpacing: 1,
+    fontSize: 22,
+    lineHeight: 34,
+    letterSpacing: 0.5,
     textAlign: 'center',
     marginBottom: 20,
     color: theme.colorWhite,
+    fontFamily: theme.fontFamilyBold,
   },
   button: {
     backgroundColor: theme.colorPurple,
@@ -148,7 +150,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: theme.colorWhite,
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilyBold,
   },
   imageWrapper: {
     alignSelf: 'center',

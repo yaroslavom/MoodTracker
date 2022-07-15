@@ -29,8 +29,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   moodDate: {
+    fontSize: 18,
+    lineHeight: 28,
     textAlign: 'center',
     color: theme.colorLavender,
+    fontFamily: theme.fontFamilyRegular,
   },
   moodItem: {
     backgroundColor: 'white',
@@ -41,9 +44,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   moodDescription: {
-    fontSize: 18,
+    fontSize: 20,
+    lineHeight: 30,
     color: theme.colorPurple,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilyBold,
   },
   iconAndDescription: {
     flexDirection: 'row',

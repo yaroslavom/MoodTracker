@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/EduNSWACTFoundation-Bold.ttf",
+      "sha1": "324c8bd20942de4a0b2514a90073499daa5c7451"
+    },
+    {
+      "path": "assets/fonts/EduNSWACTFoundation-Regular.ttf",
+      "sha1": "117ec02e510912ac57a24272ff1669b9fac26b19"
+    }
+  ]
+}
