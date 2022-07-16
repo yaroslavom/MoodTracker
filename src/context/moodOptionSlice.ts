@@ -25,9 +25,15 @@ export const moodSlice = createSlice({
       const mood = action.payload;
       state.moodList.push(mood);
     },
+    deleteMood: (state, action: PayloadAction<MoodOptionWithTimestamp>) => {
+      const mood = action.payload;
+      state.moodList = state.moodList.filter(
+        item => item.timestamp !== mood.timestamp,
+      );
+    },
   },
 });
 
-export const { addMood } = moodSlice.actions;
+export const { addMood, deleteMood } = moodSlice.actions;
 
 export default moodSlice.reducer;

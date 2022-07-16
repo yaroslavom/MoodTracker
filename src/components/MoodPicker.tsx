@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     color: theme.colorPurple,
     fontFamily: theme.fontFamilyBold,
     fontSize: 12,
-    lineHeight: 16,
+    lineHeight: 18,
     textAlign: 'center',
   },
   container: {
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colorPurple,
     width: 150,
     borderRadius: 20,
-    marginTop: 20,
+    marginTop: 14,
     alignSelf: 'center',
     padding: 10,
   },

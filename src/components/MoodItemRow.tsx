@@ -1,14 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import format from 'date-fns/format';
-import { MoodOptionWithTimestamp } from '../types';
 import { theme } from '../context/theme';
+import { MoodOptionWithTimestamp } from '../types';
 
 type MoodItemRowProps = {
   item: MoodOptionWithTimestamp;
+  deleteItem: (item: MoodOptionWithTimestamp) => void;
 };
 
-export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
+export const MoodItemRow: React.FC<MoodItemRowProps> = ({
+  item,
+  deleteItem,
+}) => {
   return (
     <View style={styles.moodItem}>
       <View style={styles.iconAndDescription}>
@@ -18,6 +22,9 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
       <Text style={styles.moodDate}>
         {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
       </Text>
+      <Pressable hitSlop={16} onPress={() => deleteItem(item)}>
+        <Text style={styles.deleteText}>Delete</Text>
+      </Pressable>
     </View>
   );
 };
@@ -52,5 +59,11 @@ const styles = StyleSheet.create({
   iconAndDescription: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  deleteText: {
+    fontSize: 18,
+    lineHeight: 28,
+    color: theme.colorBlue,
+    fontFamily: theme.fontFamilyRegular,
   },
 });
