@@ -12,6 +12,12 @@ import { addMood } from '../context/moodOptionSlice';
 import { theme } from '../context/theme';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { MoodOptionType } from '../types';
+import Reanimated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
+
+const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 const imageSrc = require('../../assets/cloudy-cloud.png');
 
@@ -19,6 +25,14 @@ const MoodPicker: React.FC = () => {
   const moodOptions = useAppSelector((state: RootState) => state.moodOption);
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
   const [hasSelected, setHasSelected] = useState(false);
+
+  const buttonStyle = useAnimatedStyle(
+    () => ({
+      opacity: selectedMood ? withTiming(1) : withTiming(0.5),
+      transform: [{ scale: selectedMood ? withTiming(1) : 0.8 }],
+    }),
+    [selectedMood],
+  );
 
   const { width } = useWindowDimensions();
 
@@ -85,9 +99,11 @@ const MoodPicker: React.FC = () => {
           </View>
         ))}
       </View>
-      <Pressable style={styles.button} onPress={handleSelect}>
+      <ReanimatedPressable
+        style={[styles.button, buttonStyle]}
+        onPress={handleSelect}>
         <Text style={styles.buttonText}>Choose</Text>
-      </Pressable>
+      </ReanimatedPressable>
     </View>
   );
 };
