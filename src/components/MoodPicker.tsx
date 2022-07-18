@@ -26,13 +26,16 @@ const MoodPicker: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
   const [hasSelected, setHasSelected] = useState(false);
 
-  const buttonStyle = useAnimatedStyle(
-    () => ({
-      opacity: selectedMood ? withTiming(1) : withTiming(0.5),
-      transform: [{ scale: selectedMood ? withTiming(1) : 0.8 }],
-    }),
-    [selectedMood],
-  );
+  const isSelectedMood = !!selectedMood;
+
+  const buttonStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(isSelectedMood ? 1.0 : 0.5),
+      transform: [{ scale: isSelectedMood ? withTiming(1) : 0.8 }],
+    };
+  }, [isSelectedMood]);
+
+  console.log(buttonStyle, 'buttonStyleE', !!selectedMood);
 
   const { width } = useWindowDimensions();
 

@@ -12,8 +12,6 @@ import com.facebook.soloader.SoLoader;
 import com.moodtracker.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import com.facebook.react.bridge.JSIModulePackage; // <- Reanimated
-import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- Reanimated
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -36,11 +34,6 @@ public class MainApplication extends Application implements ReactApplication {
         @Override
         protected String getJSMainModuleName() {
           return "index";
-        }
-
-        @Override
-        protected JSIModulePackage getJSIModulePackage() {
-          return new ReanimatedJSIModulePackage(); 
         }
       };
 
