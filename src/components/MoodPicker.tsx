@@ -35,8 +35,6 @@ const MoodPicker: React.FC = () => {
     };
   }, [isSelectedMood]);
 
-  console.log(buttonStyle, 'buttonStyleE', !!selectedMood);
-
   const { width } = useWindowDimensions();
 
   let imageSize = 200;

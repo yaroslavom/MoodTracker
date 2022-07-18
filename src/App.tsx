@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, UIManager } from 'react-native';
+import { StyleSheet, UIManager } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { NavigationContainer } from '@react-navigation/native';
 import { store, persistor } from './context/store';
 import { BottomTabsNavigator } from './screens/BottomTabs.navigator';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // enable LayoutAnimation on Android;
 UIManager.setLayoutAnimationEnabledExperimental &&
@@ -15,9 +16,9 @@ const App: React.FC = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
-          <View style={styles.container}>
+          <GestureHandlerRootView style={styles.container}>
             <BottomTabsNavigator />
-          </View>
+          </GestureHandlerRootView>
         </NavigationContainer>
       </PersistGate>
     </Provider>

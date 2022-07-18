@@ -2,7 +2,7 @@ import { ScrollView, LayoutAnimation } from 'react-native';
 import React from 'react';
 import { RootState } from '../context/store';
 import { deleteMood } from '../context/moodOptionSlice';
-import { MoodItemRow } from '../components/MoodItemRow';
+import MoodItemRow from '../components/MoodItemRow';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { MoodOptionWithTimestamp } from '../types';
 

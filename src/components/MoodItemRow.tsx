@@ -1,5 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  runOnJS,
+} from 'react-native-reanimated';
 import format from 'date-fns/format';
 import { theme } from '../context/theme';
 import { MoodOptionWithTimestamp } from '../types';
@@ -9,25 +16,53 @@ type MoodItemRowProps = {
   deleteItem: (item: MoodOptionWithTimestamp) => void;
 };
 
-export const MoodItemRow: React.FC<MoodItemRowProps> = ({
-  item,
-  deleteItem,
-}) => {
+const maxSwipe = 80;
+
+const MoodItemRow: React.FC<MoodItemRowProps> = ({ item, deleteItem }) => {
+  const translateX = useSharedValue(0);
+
+  const removeWithDelay = React.useCallback(() => {
+    setTimeout(() => {
+      deleteItem(item);
+    }, 250);
+  }, [deleteItem, item]);
+
+  const gesture = Gesture.Pan()
+    .onUpdate(event => {
+      translateX.value = event.translationX;
+    })
+    .onEnd(event => {
+      if (Math.abs(event.translationX) > maxSwipe) {
+        translateX.value = withTiming(1000 * Math.sign(event.translationX));
+        runOnJS(removeWithDelay)();
+      } else {
+        translateX.value = withTiming(0);
+      }
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
+
   return (
-    <View style={styles.moodItem}>
-      <View style={styles.iconAndDescription}>
-        <Text style={styles.moodValue}>{item.mood.emoji}</Text>
-        <Text style={styles.moodDescription}>{item.mood.description}</Text>
-      </View>
-      <Text style={styles.moodDate}>
-        {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
-      </Text>
-      <Pressable hitSlop={16} onPress={() => deleteItem(item)}>
-        <Text style={styles.deleteText}>Delete</Text>
-      </Pressable>
-    </View>
+    <GestureDetector gesture={gesture}>
+      <Animated.View style={[styles.moodItem, animatedStyle]}>
+        <View style={styles.iconAndDescription}>
+          <Text style={styles.moodValue}>{item.mood.emoji}</Text>
+          <Text style={styles.moodDescription}>{item.mood.description}</Text>
+        </View>
+        <Text style={styles.moodDate}>
+          {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
+        </Text>
+        <Pressable hitSlop={16} onPress={() => deleteItem(item)}>
+          <Text style={styles.deleteText}>Delete</Text>
+        </Pressable>
+      </Animated.View>
+    </GestureDetector>
   );
 };
+
+export default MoodItemRow;
 
 const styles = StyleSheet.create({
   moodValue: {
