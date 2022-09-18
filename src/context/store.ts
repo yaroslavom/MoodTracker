@@ -10,7 +10,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import moodOptionReducer from './moodOptionSlice';
+import moodOptionReducer from './moodSlice';
 
 const persistConfig = {
   key: 'root',

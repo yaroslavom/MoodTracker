@@ -7,8 +7,8 @@ import {
   Pressable,
   useWindowDimensions,
 } from 'react-native';
-import type { RootState } from '../context/store';
-import { addMood } from '../context/moodOptionSlice';
+import { moodOptionSelector } from '../context/selector';
+import { addMood } from '../context/moodSlice';
 import { theme } from '../context/theme';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { MoodOptionType } from '../types';
@@ -22,7 +22,7 @@ const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 const imageSrc = require('../../assets/cloudy-cloud.png');
 
 const MoodPicker: React.FC = () => {
-  const moodOptions = useAppSelector((state: RootState) => state.moodOption);
+  const moodOptions = useAppSelector(moodOptionSelector);
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
   const [hasSelected, setHasSelected] = useState(false);
 

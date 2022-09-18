@@ -1,15 +1,13 @@
 import { ScrollView, LayoutAnimation } from 'react-native';
 import React from 'react';
-import { RootState } from '../context/store';
-import { deleteMood } from '../context/moodOptionSlice';
+import { deleteMood } from '../context/moodSlice';
 import MoodItemRow from '../components/MoodItemRow';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { MoodOptionWithTimestamp } from '../types';
+import { moodListSelector } from '../context/selector';
 
 const History: React.FC = () => {
-  const moodList = useAppSelector((state: RootState) => state.moodList)
-    .slice()
-    .reverse();
+  const moodList = useAppSelector(moodListSelector).slice().reverse();
 
   const dispatch = useAppDispatch();
 
